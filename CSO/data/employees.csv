@@ -1,0 +1,3 @@
+id,officeId,username,email,name,department,position,password,isActive,createdAt,updatedAt
+1,CSO001,pragya.tripathi,pragya.tripathi@candidateservice.com,Pragya Tripathi,Candidate Service,CSO Member,$2a$10$PvwwnY42eQOt2c..fVfpXeSWDeAShsOO3cPuejg.1yweiq.2Bu7NO,true,2025-11-17T10:55:04.196Z,2025-11-17T10:55:04.196Z
+2,CSO002,vanshika.rajput,vanshika.rajput@candidateservice.com,Vanshika Rajput,Candidate Service,CSO Member,$2a$10$bKJDHAv9.wy0eMrb83Xkru.HAmSylo9yQCM6jO.ptRfrpwHEwR5fS,true,2025-11-17T10:55:04.434Z,2025-11-17T10:55:04.434Z

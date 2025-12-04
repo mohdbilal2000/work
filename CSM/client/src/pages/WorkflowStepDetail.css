@@ -1,0 +1,442 @@
+.workflow-step-detail {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.step-detail-header {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: all 0.3s;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.step-number-large {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.step-detail-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 32px;
+  color: white;
+}
+
+.step-description {
+  margin: 0;
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+.step-detail-content {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.detail-section {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.detail-section h2 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3498db;
+}
+
+.detail-section p {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.actions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.actions-list li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  border-left: 4px solid #3498db;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  position: relative;
+}
+
+.actions-list li:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #e8f4f8;
+}
+
+.actions-list li.action-completed {
+  background: #d4edda;
+  border-left-color: #28a745;
+  opacity: 0.9;
+}
+
+.actions-list li.action-completed:hover {
+  background: #c3e6cb;
+}
+
+.action-number {
+  background: #3498db;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.action-text {
+  flex: 1;
+  color: #2c3e50;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.action-text.completed-text {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.action-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+}
+
+.action-checkbox-input {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #28a745;
+}
+
+.completed-badge {
+  background: #28a745;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.loading-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+  font-size: 18px;
+  color: #3498db;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #3498db;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.link-button:hover {
+  color: #2980b9;
+}
+
+.error-message {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.error-message h2 {
+  color: #e74c3c;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+/* File Upload Section */
+.upload-section {
+  margin-top: 20px;
+}
+
+.upload-area {
+  text-align: center;
+  padding: 30px;
+  border: 2px dashed #3498db;
+  border-radius: 8px;
+  background: #f8f9fa;
+  margin-bottom: 20px;
+}
+
+.upload-button {
+  display: inline-block;
+  background: #3498db;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
+
+.upload-button:hover {
+  background: #2980b9;
+}
+
+.upload-button:active {
+  transform: scale(0.98);
+}
+
+.upload-hint {
+  color: #666;
+  font-size: 14px;
+  margin: 10px 0 0 0;
+}
+
+.upload-message {
+  padding: 12px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.upload-message.error {
+  background: #fee;
+  color: #c33;
+  border: 1px solid #fcc;
+}
+
+.upload-message.success {
+  background: #efe;
+  color: #3c3;
+  border: 1px solid #cfc;
+}
+
+.uploaded-files {
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 2px solid #eee;
+}
+
+.uploaded-files h3 {
+  color: #2c3e50;
+  font-size: 18px;
+  margin: 0 0 15px 0;
+}
+
+.files-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border-left: 4px solid #3498db;
+}
+
+.file-icon {
+  font-size: 20px;
+}
+
+.file-name {
+  flex: 1;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.file-size {
+  color: #666;
+  font-size: 13px;
+}
+
+.file-date {
+  color: #999;
+  font-size: 13px;
+}
+
+.file-download {
+  background: #3498db;
+  color: white;
+  padding: 6px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 13px;
+  transition: background 0.3s;
+}
+
+.file-download:hover {
+  background: #2980b9;
+}
+
+/* Kickoff Section */
+.kickoff-section {
+  margin-top: 15px;
+}
+
+.kickoff-completed {
+  padding: 20px;
+  background: #d4edda;
+  border: 2px solid #28a745;
+  border-radius: 8px;
+}
+
+.status-badge-completed {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #155724;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.checkmark {
+  background: #28a745;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.completion-info {
+  color: #155724;
+  font-size: 14px;
+  margin: 0;
+  padding-left: 40px;
+}
+
+.kickoff-pending {
+  padding: 20px;
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+}
+
+.status-text {
+  color: #856404;
+  font-size: 15px;
+  margin: 0 0 15px 0;
+}
+
+.kickoff-done-button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kickoff-done-button:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.kickoff-done-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.kickoff-done-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+

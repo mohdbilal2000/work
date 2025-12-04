@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Receivable {
+  id            String    @id @default(cuid())
+  invoiceNumber String
+  customerName  String
+  amount        Float
+  dueDate       DateTime
+  status        String    // pending, partial, paid, overdue
+  paidAmount    Float     @default(0)
+  payments      Payment[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Payment {
+  id            String     @id @default(cuid())
+  receivableId String
+  receivable   Receivable @relation(fields: [receivableId], references: [id], onDelete: Cascade)
+  amount       Float
+  paymentDate  DateTime
+  transactionId String    @default(cuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  category    String
+  description String
+  amount      Float
+  date        DateTime
+  vendor      String?
+  receiptUrl  String?
+  status      String   @default("pending") // pending, approved, rejected
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Payroll {
+  id              String   @id @default(cuid())
+  employeeId      String
+  employeeName    String
+  month           Int
+  year            Int
+  basicSalary     Float
+  allowances      Float
+  deductions      Float
+  netSalary       Float
+  status          String   @default("pending") // pending, processed, paid
+  isDisclosed     Boolean  @default(false)
+  processedDate   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ComplianceChallan {
+  id            String   @id @default(cuid())
+  type          String   // ESIC, PF, TDS
+  challanNumber String
+  amount        Float
+  dueDate       DateTime
+  paidDate      DateTime?
+  status        String   // pending, paid, overdue
+  accuracy      Boolean  @default(true)
+  remarks       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model DailySales {
+  id          String   @id @default(cuid())
+  date        DateTime
+  invoiceNumber String
+  customerName  String
+  amount      Float
+  paymentStatus String // paid, pending
+  daysOutstanding Int  @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CashFlow {
+  id          String   @id @default(cuid())
+  date        DateTime
+  type        String   // inflow, outflow
+  category    String
+  description String
+  amount      Float
+  balance     Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model DayBook {
+  id          String   @id @default(cuid())
+  date        DateTime
+  type        String   // income, expense
+  category    String
+  description String
+  amount      Float
+  source      String   @default("manual") // manual, vyapar
+  reference   String?  // For Vyapar transaction reference
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+

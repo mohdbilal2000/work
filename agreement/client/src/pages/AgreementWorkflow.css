@@ -1,0 +1,563 @@
+.workflow-page {
+  max-width: 1400px;
+  animation: fadeIn 0.5s ease;
+}
+
+.loading {
+  text-align: center;
+  padding: 80px;
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+/* Header */
+.workflow-header {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.btn-back {
+  padding: 12px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+.btn-back:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.header-info {
+  flex: 1;
+}
+
+.header-info h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-info p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.header-progress {
+  text-align: right;
+  padding: 16px 24px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.progress-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.progress-value {
+  font-size: 32px;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Step Indicator */
+.step-indicator {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+  margin-bottom: 32px;
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.step-indicator .step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 14px 10px;
+  border-radius: 14px;
+  transition: all 0.25s ease;
+}
+
+.step-indicator .step-item:hover {
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.step-indicator .step-item.current {
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.step-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: all 0.3s ease;
+  border: 3px solid var(--border-color);
+}
+
+.step-item.completed .step-circle {
+  background: var(--gradient-success);
+  border-color: var(--success);
+  color: white;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.step-item.current .step-circle {
+  background: var(--gradient-primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 6px var(--primary-glow), 0 8px 20px var(--primary-glow);
+  transform: scale(1.1);
+}
+
+.step-item.past .step-circle {
+  background: var(--primary);
+  border-color: var(--primary);
+  opacity: 0.7;
+}
+
+.step-label {
+  text-align: center;
+}
+
+.step-label .step-num {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.step-label .step-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.step-item.current .step-label .step-title {
+  color: var(--primary-light);
+  font-weight: 600;
+}
+
+.step-item.completed .step-label .step-title {
+  color: var(--success);
+}
+
+/* Main Content */
+.workflow-content {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+}
+
+/* Step Panel */
+.step-panel {
+  background: var(--bg-card);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 32px;
+  background: var(--gradient-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.panel-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.step-icon-large {
+  font-size: 56px;
+  position: relative;
+}
+
+.panel-header h2 {
+  font-size: 22px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.step-hint {
+  font-size: 14px;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.panel-body {
+  padding: 32px;
+}
+
+.form-group {
+  margin-bottom: 28px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.form-group input[type="date"],
+.form-group textarea {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--bg-input);
+  border: 2px solid var(--border-color);
+  border-radius: 14px;
+  color: var(--text-primary);
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-glow);
+}
+
+/* File Upload */
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
+.file-btn {
+  padding: 14px 28px;
+  background: var(--gradient-primary);
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.file-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px var(--primary-glow);
+}
+
+.file-name {
+  padding: 12px 20px;
+  background: var(--success-light);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 12px;
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Approval Toggle */
+.approval-toggle {
+  display: flex;
+  gap: 16px;
+}
+
+.approval-btn {
+  flex: 1;
+  padding: 18px 28px;
+  background: #1e293b;
+  border: 2px solid #334155;
+  border-radius: 14px;
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.approval-btn:hover {
+  background: #334155;
+  border-color: #475569;
+  transform: translateY(-2px);
+}
+
+.approval-btn.active.approved {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  border-color: #10b981;
+  color: white;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+}
+
+.approval-btn.active.rejected {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  border-color: #f59e0b;
+  color: white;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+}
+
+.completed-badge {
+  padding: 18px 24px;
+  background: var(--success-light);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 14px;
+  color: var(--success);
+  font-weight: 600;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* Panel Actions */
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 28px 32px;
+  border-top: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.btn-save {
+  padding: 14px 28px;
+  background: var(--gradient-success);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.btn-save:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+}
+
+.btn-prev,
+.btn-next {
+  padding: 14px 28px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+.btn-prev:hover,
+.btn-next:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.btn-complete {
+  padding: 14px 28px;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px var(--primary-glow);
+  margin-left: auto;
+}
+
+.btn-complete:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px var(--primary-glow);
+}
+
+.completion-message {
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--success-light) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--success);
+  font-size: 16px;
+}
+
+/* Info Sidebar */
+.info-sidebar {
+  background: var(--bg-card);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  padding: 28px;
+  height: fit-content;
+  position: sticky;
+  top: 32px;
+}
+
+.info-sidebar h3 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-item:last-of-type {
+  border-bottom: none;
+}
+
+.info-label {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.info-value {
+  font-weight: 600;
+  font-size: 14px;
+  text-align: right;
+  max-width: 55%;
+  color: var(--text-primary);
+}
+
+/* Step Progress List */
+.step-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-progress-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-input);
+  border-radius: 12px;
+  font-size: 12px;
+  border: 1px solid var(--border-color);
+  transition: all 0.25s ease;
+}
+
+.step-progress-item.done {
+  background: var(--success-light);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.step-mini-icon {
+  font-size: 18px;
+}
+
+.step-mini-title {
+  flex: 1;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.step-progress-item.done .step-mini-title {
+  color: var(--success);
+}
+
+.step-status {
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.step-progress-item.done .step-status {
+  color: var(--success);
+}
+
+@media (max-width: 1100px) {
+  .workflow-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .info-sidebar {
+    position: relative;
+    top: 0;
+  }
+  
+  .step-indicator {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .step-indicator {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .workflow-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .header-progress {
+    text-align: left;
+    width: 100%;
+  }
+  
+  .panel-actions {
+    flex-direction: column;
+  }
+  
+  .btn-complete {
+    margin-left: 0;
+  }
+}

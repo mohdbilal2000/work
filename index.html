@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defitex 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --accent-cyan: #00f5d4;
+            --accent-magenta: #f72585;
+            --text-primary: #ffffff;
+            --text-secondary: #8892a6;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 245, 212, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(247, 37, 133, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 245, 212, 0.03) 0%, transparent 70%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            background: rgba(0, 245, 212, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 245, 212, 0.2);
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .hero-text {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .tiles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tile {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: block;
+        }
+
+        .tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--tile-accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tile:hover::before {
+            opacity: 1;
+        }
+
+        .tile:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 60px var(--tile-glow);
+        }
+
+        .tile--cso {
+            --tile-accent: var(--accent-cyan);
+            --tile-glow: rgba(0, 245, 212, 0.15);
+        }
+
+        .tile--hr {
+            --tile-accent: var(--accent-magenta);
+            --tile-glow: rgba(247, 37, 133, 0.15);
+        }
+
+        .tile--operations {
+            --tile-accent: #ffd166;
+            --tile-glow: rgba(255, 209, 102, 0.18);
+        }
+
+        .tile--agreement {
+            --tile-accent: #f4a261;
+            --tile-glow: rgba(244, 162, 97, 0.18);
+        }
+
+        .tile--csm {
+            --tile-accent: #4ea8de;
+            --tile-glow: rgba(78, 168, 222, 0.18);
+        }
+
+        .tile--ceo {
+            --tile-accent: #9f7aea;
+            --tile-glow: rgba(159, 122, 234, 0.18);
+        }
+
+        .tile--finance {
+            --tile-accent: #06d6a0;
+            --tile-glow: rgba(6, 214, 160, 0.18);
+        }
+
+        .tile--recruitor {
+            --tile-accent: #fb923c;
+            --tile-glow: rgba(251, 146, 60, 0.18);
+        }
+
+        .tile--tech {
+            --tile-accent: #8892a6;
+            --tile-glow: rgba(136, 146, 166, 0.15);
+        }
+
+        .tile-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tile--cso .tile-icon {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.15), rgba(0, 245, 212, 0.05));
+            border: 1px solid rgba(0, 245, 212, 0.2);
+        }
+
+        .tile--hr .tile-icon {
+            background: linear-gradient(135deg, rgba(247, 37, 133, 0.15), rgba(247, 37, 133, 0.05));
+            border: 1px solid rgba(247, 37, 133, 0.2);
+        }
+
+        .tile--operations .tile-icon {
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.15), rgba(255, 209, 102, 0.05));
+            border: 1px solid rgba(255, 209, 102, 0.2);
+        }
+
+        .tile--agreement .tile-icon {
+            background: linear-gradient(135deg, rgba(244, 162, 97, 0.15), rgba(244, 162, 97, 0.05));
+            border: 1px solid rgba(244, 162, 97, 0.2);
+        }
+
+        .tile--csm .tile-icon {
+            background: linear-gradient(135deg, rgba(78, 168, 222, 0.15), rgba(78, 168, 222, 0.05));
+            border: 1px solid rgba(78, 168, 222, 0.2);
+        }
+
+        .tile--ceo .tile-icon {
+            background: linear-gradient(135deg, rgba(159, 122, 234, 0.15), rgba(159, 122, 234, 0.05));
+            border: 1px solid rgba(159, 122, 234, 0.2);
+        }
+
+        .tile--finance .tile-icon {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.15), rgba(6, 214, 160, 0.05));
+            border: 1px solid rgba(6, 214, 160, 0.2);
+        }
+
+        .tile--recruitor .tile-icon {
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(251, 146, 60, 0.05));
+            border: 1px solid rgba(251, 146, 60, 0.2);
+        }
+
+        .tile--tech .tile-icon {
+            background: linear-gradient(135deg, rgba(136, 146, 166, 0.15), rgba(136, 146, 166, 0.05));
+            border: 1px solid rgba(136, 146, 166, 0.2);
+        }
+
+        .tile-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .tile--cso .tile-icon svg {
+            color: var(--accent-cyan);
+        }
+
+        .tile--hr .tile-icon svg {
+            color: var(--accent-magenta);
+        }
+
+        .tile--operations .tile-icon svg {
+            color: #ffd166;
+        }
+
+        .tile--agreement .tile-icon svg {
+            color: #f4a261;
+        }
+
+        .tile--csm .tile-icon svg {
+            color: #4ea8de;
+        }
+
+        .tile--ceo .tile-icon svg {
+            color: #9f7aea;
+        }
+
+        .tile--finance .tile-icon svg {
+            color: #06d6a0;
+        }
+
+        .tile--tech .tile-icon svg {
+            color: #8892a6;
+        }
+
+        .tile--recruitor .tile-icon svg {
+            color: #fb923c;
+        }
+
+        .tile-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .tile-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .tile-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--tile-accent);
+            transition: gap 0.3s ease;
+        }
+
+        .tile:hover .tile-action {
+            gap: 14px;
+        }
+
+        .tile-action svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .tile:hover .tile-action svg {
+            transform: translateX(4px);
+        }
+
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        .tile--cso .decoration,
+        .tile--hr .decoration,
+        .tile--operations .decoration,
+        .tile--agreement .decoration,
+        .tile--csm .decoration,
+        .tile--ceo .decoration,
+        .tile--finance .decoration,
+        .tile--tech .decoration {
+            width: 150px;
+            height: 150px;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--cso .decoration {
+            background: var(--accent-cyan);
+        }
+
+        .tile--hr .decoration {
+            background: var(--accent-magenta);
+        }
+
+        .tile--operations .decoration {
+            background: #ffd166;
+        }
+
+        .tile--agreement .decoration {
+            background: #f4a261;
+        }
+
+        .tile--csm .decoration {
+            background: #4ea8de;
+        }
+
+        .tile--ceo .decoration {
+            background: #9f7aea;
+        }
+
+        .tile--finance .decoration {
+            background: #06d6a0;
+        }
+
+        .tile--tech .decoration {
+            background: #8892a6;
+        }
+
+        .tile--recruitor .decoration {
+            background: #fb923c;
+        }
+
+        .tile--disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.65;
+        }
+
+        .tile--disabled .tile-action {
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tile {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .tile:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .tile:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .hero-text {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #666;
+        }
+
+        .status-dot.online {
+            background: #00f5d4;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.offline {
+            background: #f72585;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 245, 212, 0.4); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(0, 245, 212, 0); }
+        }
+
+        .status-text {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .tiles-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tile {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">D</div>
+            <span class="logo-text">Defitex 2.0</span>
+        </div>
+        <div class="header-badge">Defitex 2.0</div>
+    </header>
+
+    <main>
+        <div class="hero-text">
+            <h1>Welcome to <span>Defitex 2.0</span></h1>
+            <p>Select a module to get started with your administrative tasks</p>
+        </div>
+
+        <div class="tiles-container">
+            <!-- CSO Tile -->
+            <a href="https://cso.defitex2.0.org" target="_blank" class="tile tile--cso" data-status-url="https://cso.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">CSO</h2>
+                <p class="tile-description">Chief Security Officer dashboard for managing security protocols and compliance.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- HR Admin Tile -->
+            <a href="https://hr.defitex2.0.org" target="_blank" class="tile tile--hr" data-status-url="https://hr.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">HR Admin</h2>
+                <p class="tile-description">Human Resources administration portal for employee management, tickets, and compliance.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- CSM Tile -->
+            <a href="https://csm.defitex2.0.org" target="_blank" class="tile tile--csm" data-status-url="https://csm.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 7.5V3m0 4.5h-.75A2.25 2.25 0 005.25 9.75v10.5M8.25 7.5h7.5M15.75 7.5V3m0 4.5h.75A2.25 2.25 0 0118.75 9.75v10.5M8.25 21v-4.125A2.625 2.625 0 0110.875 14.25h2.25A2.625 2.625 0 0115.75 16.875V21" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">CSM Portal</h2>
+                <p class="tile-description">Client Services Manager workspace paired with the hosted API for inductions and agreements.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- Operation Lead Tile -->
+            <a href="https://operations.defitex2.0.org" target="_blank" class="tile tile--operations" data-status-url="https://operations.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h1.875V8.625c0-.621.504-1.125 1.125-1.125h4.5V4.125C11.625 3.504 12.129 3 12.75 3h7.125C20.496 3 21 3.504 21 4.125v7.125c0 .621-.504 1.125-1.125 1.125H9.75l-4.5 4.5v-3.75H4.125C3.504 13.875 3 13.371 3 12.75v.375z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Operation Lead</h2>
+                <p class="tile-description">Operations leadership cockpit for deliverables, tickets, and project status.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- Agreement Tile -->
+            <a href="https://agreement.defitex2.0.org" target="_blank" class="tile tile--agreement" data-status-url="https://agreement.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-9a2.25 2.25 0 00-2.25-2.25H8.25m11.25 11.25l-4.5 4.5m4.5-4.5H15a2.25 2.25 0 00-2.25 2.25V21m0 0H6.75A2.25 2.25 0 014.5 18.75V6.375c0-.621.504-1.125 1.125-1.125h2.25" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Agreement Desk</h2>
+                <p class="tile-description">Agreement workflow manager covering drafts, approvals, and contract lifecycle.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- CEO Tile -->
+            <a href="https://ceo.defitex2.0.org" target="_blank" class="tile tile--ceo" data-status-url="https://ceo.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a3 3 0 100 6 3 3 0 000-6zM3.75 19.5c0-3.106 2.519-5.625 5.625-5.625h5.25c3.106 0 5.625 2.519 5.625 5.625" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">CEO Suite</h2>
+                <p class="tile-description">Executive intelligence dashboard for approvals, updates, and organization-wide KPIs.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- Finance Tile -->
+            <a href="https://finance.defitex2.0.org" target="_blank" class="tile tile--finance" data-status-url="https://finance.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12l3.75 3.75L18 7.5M5.25 5.25h13.5v13.5H5.25V5.25z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Finance HQ</h2>
+                <p class="tile-description">Next-gen finance stack for receivables, compliance challans, payroll, and analytics.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- Recruitor Tile -->
+            <a href="https://recruitor.defitex2.0.org" target="_blank" class="tile tile--recruitor" data-status-url="https://recruitor.defitex2.0.org">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.5-7.5 9-7.5 9s-7.5-1.5-7.5-9a7.5 7.5 0 1115 0z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Recruitor</h2>
+                <p class="tile-description">Recruiter workspace for candidate pipeline, project sourcing, and ticketing.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </a>
+
+            <!-- Technical Placeholder -->
+            <div class="tile tile--tech tile--disabled" data-status-url="" data-offline-message="Technical module assets missing">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3v2.25m4.5-2.25v2.25M4.5 9.75h15m-13.5 0V19.5h12V9.75M9 14.25h6" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Technical</h2>
+                <p class="tile-description">Reserved for the Technical Operations portal. Add the project files to enable this tile.</p>
+                <div class="tile-action">
+                    Awaiting Deployment
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Source missing</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function collectModules() {
+            return Array.from(document.querySelectorAll('.tile[data-status-url]')).map(tile => ({
+                url: tile.dataset.statusUrl,
+                dot: tile.querySelector('.status-dot'),
+                text: tile.querySelector('.status-text'),
+                offlineMessage: tile.dataset.offlineMessage || 'Offline - Start server first'
+            }));
+        }
+
+        async function pingModule(module) {
+            if (!module.url) {
+                module.dot.className = 'status-dot offline';
+                module.text.textContent = module.offlineMessage;
+                return;
+            }
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+                await fetch(module.url, { 
+                    mode: 'no-cors',
+                    signal: controller.signal 
+                });
+                clearTimeout(timeoutId);
+
+                module.dot.className = 'status-dot online';
+                module.text.textContent = 'Online';
+            } catch (e) {
+                module.dot.className = 'status-dot offline';
+                module.text.textContent = module.offlineMessage;
+            }
+        }
+
+        const modules = collectModules();
+        function refreshStatuses() {
+            modules.forEach(pingModule);
+        }
+
+        refreshStatuses();
+        setInterval(refreshStatuses, 5000);
+    </script>
+</body>
+</html>

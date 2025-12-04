@@ -1,0 +1,131 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Maya Singh",
+      "username": "recruitor.lead",
+      "email": "maya@recruitor.com",
+      "password": "$2a$10$6xZhR12X.4ptLZVBhxJ7oOpEuF3dPrM/jL7PMq99qkbp8zkMiJ03a",
+      "role": "lead"
+    },
+    {
+      "id": "u2",
+      "name": "Dev Patel",
+      "username": "recruitor.ops",
+      "email": "dev@recruitor.com",
+      "password": "$2a$10$ewjbksw7vSaUXY0uGjGGJeWrXNE1F8cVjPd.6.iVRyKuslApm0Xs6",
+      "role": "recruiter"
+    }
+  ],
+  "projects": [
+    {
+      "id": "p1",
+      "client": "Acme Retail",
+      "title": "Holiday Fulfillment Supervisors",
+      "openRoles": 12,
+      "priority": "urgent",
+      "status": "briefed",
+      "city": "Chicago",
+      "details": "Need experienced shift supervisors to oversee 3PL floor during holiday ramp.",
+      "startDate": "2025-12-05"
+    },
+    {
+      "id": "p2",
+      "client": "Northwind Logistics",
+      "title": "Warehouse Associates",
+      "openRoles": 30,
+      "priority": "high",
+      "status": "sourcing",
+      "startedBy": "recruitor.lead",
+      "startedAt": "2025-12-02T08:15:00Z",
+      "city": "Dallas",
+      "details": "Blue collar associates for inbound/outbound operations.",
+      "startDate": "2025-12-01"
+    },
+    {
+      "id": "p3",
+      "client": "Globex Support",
+      "title": "Tech Support Analysts",
+      "openRoles": 8,
+      "priority": "medium",
+      "status": "briefed",
+      "city": "Remote",
+      "details": "Level 1 email/chat support for SaaS customers.",
+      "startDate": "2025-12-10"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "c1",
+      "name": "Jaden Morales",
+      "role": "Shift Supervisor",
+      "projectId": "p1",
+      "status": "Interview",
+      "notes": "Great leadership stories; waiting for client slot",
+      "lastUpdated": "2025-12-01T16:00:00Z",
+      "recruiterId": "u1"
+    },
+    {
+      "id": "c2",
+      "name": "Neha Rao",
+      "role": "Warehouse Associate",
+      "projectId": "p2",
+      "status": "Offer",
+      "notes": "Needs confirmation on night shift allowance",
+      "lastUpdated": "2025-12-02T10:30:00Z",
+      "recruiterId": "u2"
+    },
+    {
+      "id": "c3",
+      "name": "Liam Chen",
+      "role": "Tech Support Analyst",
+      "projectId": "p3",
+      "status": "Sourcing",
+      "notes": "New lead from LinkedIn outreach",
+      "lastUpdated": "2025-12-03T08:00:00Z",
+      "recruiterId": "u1"
+    }
+  ],
+  "tickets": [
+    {
+      "id": "t1",
+      "title": "Job board access pending",
+      "description": "Need approval to post on RetailCareers board for Acme project.",
+      "priority": "medium",
+      "status": "open",
+      "projectId": "p1",
+      "createdBy": "recruitor.lead",
+      "createdAt": "2025-12-01T09:30:00Z",
+      "updatedAt": "2025-12-01T09:30:00Z"
+    },
+    {
+      "id": "t2",
+      "title": "Client waiting on shortlist",
+      "description": "Northwind expects 5 profiles by EOD.",
+      "priority": "urgent",
+      "status": "open",
+      "projectId": "p2",
+      "createdBy": "recruitor.ops",
+      "createdAt": "2025-12-02T07:45:00Z",
+      "updatedAt": "2025-12-02T07:45:00Z"
+    }
+  ],
+  "ticketComments": [
+    {
+      "id": "tc1",
+      "ticketId": "t1",
+      "user": "recruitor.lead",
+      "comment": "Sent request to procurement for approval.",
+      "createdAt": "2025-12-01T11:00:00Z"
+    },
+    {
+      "id": "tc2",
+      "ticketId": "t2",
+      "user": "recruitor.ops",
+      "comment": "Three profiles ready, two more in progress.",
+      "createdAt": "2025-12-02T12:15:00Z"
+    }
+  ]
+}
+
+

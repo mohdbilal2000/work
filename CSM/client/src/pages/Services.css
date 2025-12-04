@@ -1,0 +1,118 @@
+.services-page {
+  max-width: 1400px;
+}
+
+.services-table {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.services-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.services-table thead {
+  background: #f8f9fa;
+}
+
+.services-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.services-table td {
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6;
+  color: #555;
+}
+
+.services-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.hot {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.warm {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.cold {
+  background: #cfe2ff;
+  color: #084298;
+}
+
+.priority-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.priority-badge.low {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.priority-badge.medium {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.priority-badge.high {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.priority-badge.urgent {
+  background: #f5c6cb;
+  color: #721c24;
+}
+
+.services-table .btn-edit,
+.services-table .btn-delete {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.services-table .btn-edit {
+  background: #f39c12;
+  color: white;
+}
+
+.services-table .btn-edit:hover {
+  background: #e67e22;
+}
+
+.services-table .btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.services-table .btn-delete:hover {
+  background: #c0392b;
+}
+

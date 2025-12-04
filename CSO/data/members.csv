@@ -1,0 +1,2 @@
+id,username,email,name,role,password,createdAt
+1,admin,admin@candidateservice.com,Administrator,admin,$2a$10$D2ZKzhygN0bzuoZLbdRe0O/TIi28nIyz2ZQJVW7ErHIK0b49bhyFC,2025-11-17T10:00:24.335Z

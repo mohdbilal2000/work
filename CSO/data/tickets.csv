@@ -1,0 +1,7 @@
+id,title,description,status,priority,category,assignedTo,createdBy,createdByName,relatedCandidateId,attachments,comments,resolvedAt,closedAt,createdAt,updatedAt
+1764579893713,Low Joining Probability Alert - aas yya,"Candidate aas yya (ID: 1764579783778) has a joining probability of %, which is below the 60% threshold. This requires attention and follow-up.
+
+Candidate Details:
+- Email: aas@gma
+- Phone: 987898776
+- Position: aas",open,high,process,,1,pragya.tripathi,1764579783778,[],[],,,2025-12-01T09:04:53.713Z,2025-12-03T11:55:44.420Z

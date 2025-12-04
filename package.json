@@ -1,0 +1,22 @@
+{
+  "name": "defitex-portal",
+  "version": "1.0.0",
+  "description": "Defitex - Unified Portal for CSO and HR Admin",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "node build-all.js",
+    "build:all": "node build-all.js",
+    "install:all": "npm install && cd CSO && npm install && cd ../\"HR admin\" && npm install && cd ../../CSM/client && npm install && cd ../../CSM/server && npm install && cd ../../finance && npm install && cd .."
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2",
+    "http-proxy-middleware": "^2.0.6",
+    "multer": "^1.4.5-lts.1",
+    "sqlite3": "^5.1.6"
+  }
+}
+

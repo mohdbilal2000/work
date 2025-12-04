@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defitex 2.0 - Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --accent-cyan: #00f5d4;
+            --accent-magenta: #f72585;
+            --text-primary: #ffffff;
+            --text-secondary: #8892a6;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 245, 212, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(247, 37, 133, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 245, 212, 0.03) 0%, transparent 70%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .server-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .hero-text {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero-text h1 span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .tiles-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tile {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: block;
+        }
+
+        .tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--tile-accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tile:hover::before {
+            opacity: 1;
+        }
+
+        .tile:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 60px var(--tile-glow);
+        }
+
+        .tile--cso {
+            --tile-accent: var(--accent-cyan);
+            --tile-glow: rgba(0, 245, 212, 0.15);
+        }
+
+        .tile--hr {
+            --tile-accent: var(--accent-magenta);
+            --tile-glow: rgba(247, 37, 133, 0.15);
+        }
+
+        .tile--csm {
+            --tile-accent: #7c3aed;
+            --tile-glow: rgba(124, 58, 237, 0.15);
+        }
+
+        .tile--bd {
+            --tile-accent: #f59e0b;
+            --tile-glow: rgba(245, 158, 11, 0.15);
+        }
+
+        .tile--ops {
+            --tile-accent: #10b981;
+            --tile-glow: rgba(16, 185, 129, 0.15);
+        }
+
+        .tile--finance {
+            --tile-accent: #06b6d4;
+            --tile-glow: rgba(6, 182, 212, 0.15);
+        }
+
+        .tile--ceo {
+            --tile-accent: #fbbf24;
+            --tile-glow: rgba(251, 191, 36, 0.15);
+        }
+
+        .tile--cos {
+            --tile-accent: #a855f7;
+            --tile-glow: rgba(168, 85, 247, 0.15);
+        }
+
+        .tile--technical {
+            --tile-accent: #ef4444;
+            --tile-glow: rgba(239, 68, 68, 0.15);
+        }
+
+        .tile-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tile--cso .tile-icon {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.15), rgba(0, 245, 212, 0.05));
+            border: 1px solid rgba(0, 245, 212, 0.2);
+        }
+
+        .tile--hr .tile-icon {
+            background: linear-gradient(135deg, rgba(247, 37, 133, 0.15), rgba(247, 37, 133, 0.05));
+            border: 1px solid rgba(247, 37, 133, 0.2);
+        }
+
+        .tile--csm .tile-icon {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(124, 58, 237, 0.05));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+
+        .tile--bd .tile-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .tile--ops .tile-icon {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .tile--finance .tile-icon {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(6, 182, 212, 0.05));
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .tile--ceo .tile-icon {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05));
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .tile--cos .tile-icon {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.05));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .tile--technical .tile-icon {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .tile-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .tile--cso .tile-icon svg {
+            color: var(--accent-cyan);
+        }
+
+        .tile--hr .tile-icon svg {
+            color: var(--accent-magenta);
+        }
+
+        .tile--csm .tile-icon svg {
+            color: #7c3aed;
+        }
+
+        .tile--bd .tile-icon svg {
+            color: #f59e0b;
+        }
+
+        .tile--ops .tile-icon svg {
+            color: #10b981;
+        }
+
+        .tile--finance .tile-icon svg {
+            color: #06b6d4;
+        }
+
+        .tile--ceo .tile-icon svg {
+            color: #fbbf24;
+        }
+
+        .tile--cos .tile-icon svg {
+            color: #a855f7;
+        }
+
+        .tile--technical .tile-icon svg {
+            color: #ef4444;
+        }
+
+        .tile-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .tile-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .tile-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--tile-accent);
+            transition: gap 0.3s ease;
+        }
+
+        .tile:hover .tile-action {
+            gap: 14px;
+        }
+
+        .tile-action svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .tile:hover .tile-action svg {
+            transform: translateX(4px);
+        }
+
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        .tile--cso .decoration {
+            width: 150px;
+            height: 150px;
+            background: var(--accent-cyan);
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--hr .decoration {
+            width: 150px;
+            height: 150px;
+            background: var(--accent-magenta);
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--csm .decoration {
+            width: 150px;
+            height: 150px;
+            background: #7c3aed;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--bd .decoration {
+            width: 150px;
+            height: 150px;
+            background: #f59e0b;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--ops .decoration {
+            width: 150px;
+            height: 150px;
+            background: #10b981;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--finance .decoration {
+            width: 150px;
+            height: 150px;
+            background: #06b6d4;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--ceo .decoration {
+            width: 150px;
+            height: 150px;
+            background: #fbbf24;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--cos .decoration {
+            width: 150px;
+            height: 150px;
+            background: #a855f7;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        .tile--technical .decoration {
+            width: 150px;
+            height: 150px;
+            background: #ef4444;
+            bottom: -50px;
+            right: -50px;
+            opacity: 0.1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tile {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .tile:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .tile:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .tile:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .tile:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .tile:nth-child(5) {
+            animation-delay: 1.0s;
+        }
+
+        .tile:nth-child(6) {
+            animation-delay: 1.2s;
+        }
+
+        .tile:nth-child(7) {
+            animation-delay: 1.4s;
+        }
+
+        .tile:nth-child(8) {
+            animation-delay: 1.6s;
+        }
+
+        .tile:nth-child(9) {
+            animation-delay: 1.8s;
+        }
+
+        .hero-text {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @media (max-width: 992px) {
+            .tiles-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .tiles-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tile {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="grid-overlay"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">D</div>
+            <span class="logo-text">Defitex 2.0</span>
+        </div>
+        <div class="server-status">
+            <span class="status-dot"></span>
+            Preview Mode
+        </div>
+    </header>
+
+    <main>
+        <div class="hero-text">
+            <h1>Welcome to <span>Defitex 2.0</span></h1>
+            <p>Select a module to get started with your administrative tasks</p>
+        </div>
+
+        <div class="tiles-container">
+            <a href="https://cso.defitex2.0.org" target="_blank" class="tile tile--cso">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">CSO</h2>
+                <p class="tile-description">Chief Security Officer dashboard for managing security protocols and compliance.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="https://hr.defitex2.0.org" target="_blank" class="tile tile--hr">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">HR Admin</h2>
+                <p class="tile-description">Human Resources administration portal for employee management and records.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="https://csm.defitex2.0.org" target="_blank" class="tile tile--csm">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">CSM</h2>
+                <p class="tile-description">Client Service Management portal for managing clients, services, and agreements.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="https://agreement.defitex2.0.org" target="_blank" class="tile tile--bd">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Tendering</h2>
+                <p class="tile-description">Tendering portal for agreement creation workflow - 8 step SOP process (ORG8.0).</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="https://operations.defitex2.0.org" target="_blank" class="tile tile--ops">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Operations Lead</h2>
+                <p class="tile-description">Operations management portal for tracking deliverables, team coordination, and process monitoring.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="https://finance.defitex2.0.org" target="_blank" class="tile tile--finance">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Finance</h2>
+                <p class="tile-description">Financial management portal for invoicing, payments, budgets, and financial reporting.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="https://ceo.defitex2.0.org" target="_blank" class="tile tile--ceo">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">CEO</h2>
+                <p class="tile-description">Executive dashboard for strategic oversight, approvals, and organizational metrics.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="#" target="_blank" class="tile tile--cos">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">COS</h2>
+                <p class="tile-description">Chief of Staff portal for executive coordination, scheduling, and administrative oversight.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+
+            <a href="#" target="_blank" class="tile tile--technical">
+                <div class="decoration"></div>
+                <div class="tile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+                    </svg>
+                </div>
+                <h2 class="tile-title">Technical</h2>
+                <p class="tile-description">Technical operations portal for system management, IT support, and infrastructure monitoring.</p>
+                <div class="tile-action">
+                    Enter Module
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                </div>
+            </a>
+        </div>
+    </main>
+</body>
+</html>
+

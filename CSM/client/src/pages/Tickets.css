@@ -1,0 +1,185 @@
+.tickets-page {
+  max-width: 1400px;
+}
+
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.ticket-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.ticket-card:hover {
+  transform: translateY(-5px);
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.ticket-header h3 {
+  color: #2c3e50;
+  margin: 0;
+  flex: 1;
+}
+
+.ticket-info {
+  margin-bottom: 15px;
+}
+
+.ticket-info p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.ticket-description {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  color: #666;
+}
+
+.ticket-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-view {
+  flex: 1;
+  padding: 8px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-view:hover {
+  background: #2980b9;
+}
+
+.btn-resolve {
+  flex: 1;
+  padding: 8px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-resolve:hover {
+  background: #229954;
+}
+
+.ticket-details {
+  max-width: 700px;
+}
+
+.ticket-detail-info {
+  margin-bottom: 30px;
+}
+
+.ticket-detail-info p {
+  margin: 10px 0;
+  color: #555;
+}
+
+.ticket-description-box {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+
+.ticket-description-box p {
+  margin-top: 10px;
+  color: #666;
+}
+
+.comments-section {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #eee;
+}
+
+.comments-section h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.comments-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.comment-header strong {
+  color: #2c3e50;
+}
+
+.comment-header span {
+  color: #7f8c8d;
+  font-size: 12px;
+}
+
+.comment-item p {
+  color: #555;
+  margin: 0;
+}
+
+.add-comment {
+  margin-top: 20px;
+}
+
+.add-comment textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
+.add-comment textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
