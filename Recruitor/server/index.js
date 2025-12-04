@@ -14,7 +14,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.RECRUITOR_PORT || 5100;
-const JWT_SECRET = process.env.RECRUITOR_JWT || 'recruitor-secret';
+const JWT_SECRET = process.env.RECRUITOR_JWT;
+if (!JWT_SECRET) {
+  throw new Error('RECRUITOR_JWT environment variable is required');
+}
 const DATA_PATH = path.join(__dirname, 'database', 'recruitor.json');
 
 const app = express();
