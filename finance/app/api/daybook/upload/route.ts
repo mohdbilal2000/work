@@ -3,12 +3,6 @@ import { prisma } from '@/lib/prisma'
 // @ts-ignore - xlsx types may not be available
 import * as XLSX from 'xlsx'
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
-
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
