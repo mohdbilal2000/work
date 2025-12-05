@@ -325,7 +325,7 @@ function ComplianceTransferPanel() {
               employer_contribution: String((record as EsicRecord).employer_contribution ?? ''),
               payment_status: (record as EsicRecord).payment_status || 'pending',
               payment_date: (record as EsicRecord).payment_date
-                ? (record as EsicRecord).payment_date?.split('T')[0]
+                ? String((record as EsicRecord).payment_date.split('T')[0])
                 : '',
               status: (record as EsicRecord).status || 'active',
             }
