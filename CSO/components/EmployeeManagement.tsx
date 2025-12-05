@@ -50,11 +50,13 @@ export default function EmployeeManagement({ onClose }: EmployeeManagementProps)
         : '/api/employees'
       const method = editingEmployee ? 'PUT' : 'POST'
 
-      const payload = { ...formData }
+      let payload: any = { ...formData }
       if (!editingEmployee || payload.password) {
         // Only include password if creating new or updating with new password
       } else {
-        delete payload.password
+        // Remove password from payload if not updating password
+        const { password, ...payloadWithoutPassword } = payload
+        payload = payloadWithoutPassword
       }
 
       const response = await fetch(url, {
