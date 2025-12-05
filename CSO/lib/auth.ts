@@ -5,6 +5,8 @@ const JWT_SECRET = process.env.JWT_SECRET
 if (!JWT_SECRET) {
   throw new Error('JWT_SECRET environment variable is required')
 }
+// Type assertion: after the check above, JWT_SECRET is guaranteed to be a string
+const JWT_SECRET_STRING: string = JWT_SECRET
 
 export interface TokenPayload {
   userId: string
@@ -13,12 +15,12 @@ export interface TokenPayload {
 }
 
 export function generateToken(payload: TokenPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' })
+  return jwt.sign(payload, JWT_SECRET_STRING, { expiresIn: '7d' })
 }
 
 export function verifyToken(token: string): TokenPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as TokenPayload
+    return jwt.verify(token, JWT_SECRET_STRING) as TokenPayload
   } catch {
     return null
   }
