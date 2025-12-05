@@ -20,6 +20,7 @@ const statusColors = {
   accepted: 'bg-green-100 text-green-800',
   join: 'bg-indigo-100 text-indigo-800',
   rejected: 'bg-red-100 text-red-800',
+  backout: 'bg-gray-200 text-gray-800',
 }
 
 export default function CandidateCard({ candidate, onEdit, onDelete }: CandidateCardProps) {
