@@ -569,7 +569,7 @@ export default function CandidateModal({ candidate, onClose }: CandidateModalPro
       if (formData.esicStatus || formData.pfStatus || formData.tdsStatus || formData.medicalStatus) {
         try {
           const enrollmentData = {
-            candidateId: candidate?.id || payload.id || Date.now().toString(),
+            candidateId: candidate?.id || Date.now().toString(),
             employeeName: `${formData.firstName} ${formData.lastName}`,
             email: formData.email,
             phone: formData.phone,
