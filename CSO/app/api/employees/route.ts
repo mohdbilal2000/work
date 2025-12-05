@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     // Remove passwords from response
     const employeesWithoutPasswords = employees.map(({ password, ...emp }) => ({
       ...emp,
-      isActive: emp.isActive === 'true' || emp.isActive === true,
+      isActive: emp.isActive,
     }))
 
     return NextResponse.json({ employees: employeesWithoutPasswords })
