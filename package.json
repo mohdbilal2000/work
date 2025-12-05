@@ -4,7 +4,8 @@
   "description": "Defitex - Unified Portal for CSO and HR Admin",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node start.js",
+    "start:server": "node server.js",
     "dev": "node server.js",
     "build": "node build-all.js",
     "build:all": "node build-all.js",

@@ -86,11 +86,28 @@ console.log(`✅ Successful: ${successCount}`);
 console.log(`❌ Failed: ${failCount}`);
 console.log('='.repeat(50) + '\n');
 
+// Generate Prisma Client for Finance Portal (migrations run at startup)
+console.log('\n📦 Generating Prisma Client for Finance Portal...');
+const financePath = path.join(process.cwd(), 'finance');
+if (fs.existsSync(financePath)) {
+  try {
+    process.chdir(financePath);
+    execSync('npx prisma generate', { stdio: 'inherit' });
+    console.log('✅ Prisma Client generated successfully!\n');
+    process.chdir(process.cwd().split(path.sep).slice(0, -1).join(path.sep) || process.cwd());
+  } catch (error) {
+    console.log('⚠️  Prisma Client generation failed, but continuing...');
+    console.log('   Error:', error.message);
+    process.chdir(process.cwd().split(path.sep).slice(0, -1).join(path.sep) || process.cwd());
+  }
+}
+
 if (failCount > 0) {
   console.log('⚠️  Some modules failed to build. Please check the errors above.');
   process.exit(1);
 } else {
   console.log('🎉 All modules built successfully!');
-  console.log('   You can now start the server with: npm start\n');
+  console.log('   Prisma migrations will run automatically when you start the server.');
+  console.log('   Start the server with: npm start\n');
 }
 
